@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/EtherBook.sol": {
+      "content": "//SPDX-License-Identifier:MIT\n\npragma solidity ^0.8.0;\n\ncontract GasCalculatorAndAddressBook {\n    mapping (address => uint256) private addressCount;\n    address[] private addressList;\n    constructor(){\n        addressList.length==0;\n    }\n\n    function addAddress(address newAddress) public {\n        addressCount[newAddress] += 1;\n        addressList.push(newAddress);\n    }\n\n    function removeAddress(address targetAddress) public {\n        require(addressCount[targetAddress] > 0, \"Address not found in the address book\");\n        for (uint i = 0; i < addressList.length; i++) {\n            if (addressList[i] == targetAddress) {\n                addressList[i] = addressList[addressList.length - 1];\n                addressList.pop();\n                addressCount[targetAddress] = 0;\n                break;\n            }\n        }\n    }\n\n    function getTopAddresses(uint256 count) public view returns (address[] memory) {\n        require(count > 0, \"Count should be greater than zero\");\n        uint256 length = addressList.length;\n        uint256[] memory countList = new uint256[](length);\n        for (uint256 i = 0; i < length; i++) {\n            countList[i] = addressCount[addressList[i]];\n        }\n        uint256[] memory sortedIndices = _sortIndices(countList, length);\n        address[] memory topAddresses = new address[](count);\n        for (uint256 i = 0; i < count && i < length; i++) {\n            topAddresses[i] = addressList[sortedIndices[length - i - 1]];\n        }\n        return topAddresses;\n    }\n\n    function _sortIndices(uint256[] memory a, uint256 n) private pure returns (uint256[] memory) {\n        uint256[] memory indices = new uint256[](n);\n        for (uint256 i = 0; i < n; i++) {\n            indices[i] = i;\n        }\n        for (uint256 i = 0; i < n - 1; i++) {\n            for (uint256 j = i + 1; j < n; j++) {\n                if (a[indices[i]] < a[indices[j]]) {\n                    uint256 temp = indices[i];\n                    indices[i] = indices[j];\n                    indices[j] = temp;\n                }\n            }\n        }\n        return indices;\n    }\n\n   function calculateGasFee(uint256 amount) public view returns (uint256) {\n        // Calculate the amount of gas required for the transaction\n        uint256 gasRequired = estimateGasRequired(amount);\n        \n        // Estimate the gas price\n        uint256 gasPrice = estimateGasPrice();\n        \n        // Calculate the gas fee in Gwei\n        uint256 gasFee = gasPrice * gasRequired;\n        \n        // Convert the gas fee to ether\n        uint256 etherFee = gasFee / 10**9;\n        \n        return etherFee;\n    }\n    \n    function estimateGasPrice() private view returns (uint256) {\n        // Use the basefee as the gas price, which represents the minimum gas price\n        // required to include a transaction in a block.\n        uint256 baseFee = block.basefee;\n        \n        // If the basefee is 0, use a default value of 10 Gwei.\n        if (baseFee == 0) {\n            return 10 * 10**9;\n        }\n        \n        // Otherwise, return the basefee.\n        return baseFee;\n    }\n    \n    function estimateGasRequired(uint256 amount) private view returns (uint256) {\n        // Use the gaslimit as an estimate for the maximum amount of gas that can be used\n        // for the transaction.\n        uint256 gasLimit = block.gaslimit;\n        \n        // Use a gas usage multiplier of 1.5 to account for the possibility that the\n        // transaction may require more gas than the gas limit.\n        uint256 gasUsageMultiplier = 15 * 10**16; // 1.5 * 10**16\n        \n        // Estimate the amount of gas required for the transaction.\n        uint256 gasRequired = amount * gasUsageMultiplier / gasLimit;\n        \n        // Add a buffer of 10% to the estimated gas required to account for\n        // any unforeseen circumstances.\n        uint256 gasBuffer = gasRequired / 10;\n        \n        return gasRequired + gasBuffer;\n    }\n\n\n    //getFunctions\n    function getArrayLength()public view returns(uint256){\n        return addressList.length;\n    \n    }\n    function getAddressCount(address name)public view returns(uint256){\n        return addressCount[name];\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

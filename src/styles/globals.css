@@ -1,0 +1,83 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Set font family and size */
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+  }
+  
+  /* Add some default styles to links */
+  a {
+    color: blue;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Add some default styles to headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  h1 {
+    font-size: 36px;
+  }
+  
+  h2 {
+    font-size: 28px;
+  }
+  
+  h3 {
+    font-size: 22px;
+  }
+  
+  /* Add some default styles to buttons */
+  button {
+    background-color: blue;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: darkblue;
+  }
+  
+  /* Add some default styles to form elements */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+  }
+  
+  input[type="submit"] {
+    background-color: blue;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: darkblue;
+  }
+  

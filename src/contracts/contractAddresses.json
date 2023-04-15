@@ -1,0 +1,18 @@
+{
+    "development": {
+      "GasCalculatorAndAddressBook": "0x123456789..."
+    },
+    "zkEVM":{
+        "GasCalculatorAndAddressBook":"0x08a012d302550537e80744D9F428C8671CAB5A8D"
+    },
+    "hardhat":{
+        "GasCalculatorAndAddressBook":"0x5FbDB2315678afecb367f032d93F642f64180aa3"
+    },
+    "ropsten": {
+      "GasCalculatorAndAddressBook": "0xabcdef0123..."
+    },
+    "mainnet": {
+      "GasCalculatorAndAddressBook": "0x456789abcdef..."
+    }
+  }
+  
